@@ -17,11 +17,21 @@ const (
 	Hex   Encoding = "hex"
 )
 
+// HashAlgo represents a hash function for name identifiers.
+type HashAlgo string
+
+const (
+	Direct  HashAlgo = "direct"
+	SHA256d HashAlgo = "sha256d"
+)
+
 // NameShowOptions represents the optional options struct provided with a
 // NameShowCmd command.
 type NameShowOptions struct {
 	NameEncoding  Encoding `json:"nameEncoding,omitempty"`
 	ValueEncoding Encoding `json:"valueEncoding,omitempty"`
+	ByHash        HashAlgo `json:"byHash,omitempty"`
+	AllowExpired  bool     `json:"allowExpired"`
 	StreamID      string   `json:"streamID,omitempty"`
 }
 
