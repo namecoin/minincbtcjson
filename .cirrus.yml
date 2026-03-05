@@ -11,17 +11,17 @@ task:
     - go mod tidy
   # Disable maligned because it's deprecated by author in favoooooor of govet fieldalignment.
   # Disable tagliatelle because it interferes with JSON protocol used by Namecoin Core.
-  lint_script: golangci-lint run --enable-all --disable exhaustivestruct,exhaustruct,gochecknoglobals,gochecknoinits,gomnd,maligned,tagliatelle $GOLANGCI_ARGS -v --out-format json > lint-report.json
+  lint_script: golangci-lint run $GOLANGCI_ARGS -v --timeout 5m --output.json.path $CIRRUS_WORKING_DIR/lint-report.json
   matrix:
     - name: Go Lint $GOOS New
       env:
-        GOLANGCI_ARGS: "--new-from-rev=HEAD~"
+        GOLANGCI_ARGS: "--new-from-rev=HEAD~ --enable=cyclop,dupword,embeddedstructfieldcheck,err113,errcheck,exhaustive,forcetypeassert,funlen,gocognit,goconst,gocritic,godoclint,godot,gosec,govet,ineffassign,mnd,modernize,nakedret,nlreturn,staticcheck,unconvert,unparam,unused,wastedassign,wsl_v5"
     - name: Go Lint $GOOS Mandatory
       env:
-        GOLANGCI_ARGS: ""
+        GOLANGCI_ARGS: "--enable=asasalint,asciicheck,bidichk,bodyclose,canonicalheader,decorder,dupl,durationcheck,errchkjson,errname,exptostd,gocheckcompilerdirectives,goprintffuncname,misspell,predeclared,usestdlibvars --disable=errcheck,govet,ineffassign,staticcheck,unused"
     - name: Go Lint $GOOS
       env:
-        GOLANGCI_ARGS: ""
+        GOLANGCI_ARGS: "--enable=cyclop,dupword,embeddedstructfieldcheck,err113,errcheck,exhaustive,forcetypeassert,funlen,gocognit,goconst,gocritic,godoclint,godot,gosec,govet,ineffassign,mnd,modernize,nakedret,nlreturn,staticcheck,unconvert,unparam,unused,wastedassign,wsl_v5"
       allow_failures: true
   matrix:
     - env:
