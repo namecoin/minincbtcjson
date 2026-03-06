@@ -43,7 +43,7 @@ task:
     memory: 8G
   install_script:
     # Fork of mitchellh/gox that supports libraries, see gox PR #115
-    - GO111MODULE=off go get github.com/dgsb/gox
+    - go install github.com/dgsb/gox@master
   fetch_script:
     - go mod init github.com/"$CIRRUS_REPO_FULL_NAME"
     - go mod tidy
